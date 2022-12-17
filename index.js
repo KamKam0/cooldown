@@ -1,2 +1,2 @@
-exports.version = "1.2.0"
+exports.version = require("./package.json").version
 exports.Cooldowns = require("./Cooldowns")
