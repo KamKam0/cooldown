@@ -3,7 +3,7 @@ class User{
         this.ID = datas.id
         this.Date = datas.date
         this.Time = datas.time
-        this.Properties = []
+        this.Properties = datas.properties || []
     }
     
     GetTime(){
