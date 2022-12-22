@@ -12,6 +12,7 @@ class Cooldowns{
         let datas = vc.GetAll()
         this.cooldowns_names.push(datas.name)
         this.cooldowns.push(datas.to_push)
+        return true
     }
 
     DeleteCooldown(name){
@@ -19,6 +20,7 @@ class Cooldowns{
         if(!this.cooldowns_names.includes(name)) return null
         this.cooldowns_names.splice(this.cooldowns_names[this.cooldowns_names.indexOf(this.cooldowns_names.find(e => e === name))], 1)
         this.cooldowns.splice(this.cooldowns[this.cooldowns.indexOf(this.cooldowns.find(e => e.name === name))], 1)
+        return true
     }
 
     GetCooldown(name){
@@ -27,10 +29,10 @@ class Cooldowns{
         return this.cooldowns.find(c => c.name === name)
     }
 
-    Deploy(){
-        ["global", "commands", "verif", "mention"].forEach(name => {
-            this.AddCooldown(name)
-        })
+    Deploy(elements){
+        if(!elements || !Array.isArray(elements)) return null
+        elements.filter(pro => typeof pro === "string").forEach(name => this.AddCooldown(name))
+        return true
     }
 }
 

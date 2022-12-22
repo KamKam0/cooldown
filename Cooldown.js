@@ -1,3 +1,4 @@
+const User = require("./User")
 class Cooldown{
     constructor(name){
         this.name = name
@@ -9,43 +10,80 @@ class Cooldown{
     }
 
     AddUser(datas){
-        if(!datas || typeof datas !== "object" || !datas.id || !datas.date || isNaN(datas.id) || String(datas.id).length !== 18 || typeof datas.date !== "number" || !datas.time || typeof datas.time !== "number") return null
-        const user = {ID: datas.id, Time: datas.time, Date: datas.date, Guild: datas.guild, Command: datas.cmd}
-        this.ar.push(user)
-        setTimeout(() => this.RemoveUser(user), user.Time * 1000)
+        if(!datas || typeof datas !== "object") return null
+        if(!datas.id || ["number", "string"].includes(typeof datas.id)) return null
+        if(!datas.time || typeof datas.time !== "number") return null
+        if(datas.properties && !Array.isArray(datas.properties)) return null
+        if(datas.properties && datas.properties.filter(pro => typeof pro === "object" && typeof Object.values(pro)[0] === "string").length !== datas.properties.length) return null
+        if(this.GetUser(datas.id, datas.properties)) return null
+        this.ar.push(new User({ID: datas.id, Time: datas.time, Date: Date.now(), Properties: datas.properties}))
+        setTimeout(() => this.RemoveUser(datas.id, datas.properties), datas.time * 1000)
+        return true
     }
 
-    RemoveUser(datas){
-        if(!datas || typeof datas !== "object" || !datas.ID || !datas.Date || isNaN(datas.ID) || String(datas.ID).length !== 18 || typeof datas.Date !== "number" || !datas.Time || typeof datas.Time !== "number") return null
-        this.ar.splice(this.ar[this.ar.indexOf(this.ar.find(e => e.ID === datas.ID && datas.Command === e.Command && datas.Date === e.Date && datas.Guild === e.Guild))], 1)
+    RemoveUsersByID(id){
+        if(!id || ["number", "string"].includes(typeof id)) return null
+        if(!this.ar.filter(e => e.ID === id)[0]) return null
+        this.ar = this.ar.filter(e => e.ID !== id)
+        return true
     }
 
-    GetUser(ID){
-        if(!ID || isNaN(ID) || String(ID).length !== 18) return null
-        if(!this.ar.find(e => e.ID === ID)) return null
-        else return this.ar.filter(e => e.ID === ID)
+    RemoveUsersByProperties(properties){
+        if(!properties || !Array.isArray(properties)) return null
+        if(properties.filter(pro => typeof pro === "object" && typeof Object.values(pro)[0] === "string").length !== properties.length) return null
+        if(!this.ar.filter(e => e.CompareProperties(properties))[0]) return null
+        this.ar = this.ar.filter(e => !e.CompareProperties(properties))
+        return true
     }
 
-    GetCommand(name){
-        if(!name || typeof name !== "string") return null
-        if(!this.ar.find(e => e.Command === name)) return null
-        else return this.ar.filter(e => e.Command === name)
+    RemoveUsersByProperty(property){
+        if(!property || typeof property !== "object") return null
+        if(typeof Object.values(property)[0] !== "string") return null
+        if(!this.ar.filter(e => e.IncludeProperty(property))[0]) return null
+        this.ar = this.ar.filter(e => !e.IncludeProperty(property))
+        return true
     }
 
-    GetGuild(ID){
-        if(!ID || isNaN(ID) || String(ID).length !== 18) return null
-        if(!this.ar.find(e => e.Guild === ID)) return null
-        else return this.ar.filter(e => e.Guild === ID)
+    RemoveUser(id, properties){
+        if(!id || ["number", "string"].includes(typeof id)) return null
+        if(!properties || !Array.isArray(properties)) return null
+        if(properties.filter(pro => typeof pro === "object" && typeof Object.values(pro)[0] === "string").length !== properties.length) return null
+        let user = this.ar.find(e => e.ID === id && e.CompareProperties(properties))
+        if(!user) return null
+        this.ar.splice(user, 1)
+        return true
     }
 
+    GetUsersByID(id){
+        if(!id || ["number", "string"].includes(typeof id)) return null
+        let users = this.ar.filter(e => e.ID === id)
+        if(!users[0]) return null
+        return users
+    }
 
-    Get(datas){
-        if(!datas || typeof datas !== "object" || !datas.id || isNaN(datas.id) || String(datas.id).length !== 18) return null
-        let vd = {ID: datas.id, Guild: null, Command: null}
-        if(datas.guild) if(!isNaN(datas.guild) && String(datas.guild).length === 18) vd.Guild = datas.guild
-        if(datas.cmd) if(typeof datas.cmd === "string") vd.Command = datas.cmd
-        if(!this.ar.find(e => e.ID === vd.ID && e.Command === vd.Command && e.Guild === vd.Guild)) return null
-        else return this.ar.find(e => e.ID === vd.ID && e.Command === vd.Command && e.Guild === vd.Guild)
+    GetUsersByProperties(properties){
+        if(!properties || !Array.isArray(properties)) return null
+        if(properties.filter(pro => typeof pro === "object" && typeof Object.values(pro)[0] === "string").length !== properties.length) return null
+        let users = this.ar.filter(e => e.CompareProperties(properties))
+        if(!users[0]) return null
+        return users
+    }
+
+    GetUsersByProperty(property){
+        if(!property || typeof property !== "object") return null
+        if(typeof Object.values(property)[0] !== "string") return null
+        let users = this.ar.filter(e => e.IncludeProperty(property))
+        if(!users[0]) return null
+        return users
+    }
+
+    GetUser(id, properties){
+        if(!id || ["number", "string"].includes(typeof id)) return null
+        if(!properties || !Array.isArray(properties)) return null
+        if(properties.filter(pro => typeof pro === "object" && typeof Object.values(pro)[0] === "string").length !== properties.length) return null
+        let user = this.ar.find(e => e.ID === id && e.CompareProperties(properties))
+        if(!user) return null
+        return user
     }
 }
 
