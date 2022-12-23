@@ -44,7 +44,7 @@ Get with Properties
 Returns all users with these properties.
 
 ```js
-    Cooldown.GetCooldown("test").GetUsersByProperties([{Color: "Blue", Server: "test", phone: "06060606"}])
+    Cooldown.GetCooldown("test").GetUsersByProperties([{Color: "Blue"}, {Server: "test"}, {phone: "06060606"}])
     //If User: returns the users, else returns null
 ```
 
@@ -60,7 +60,7 @@ Get with ID and Property
 Returns a unique user with these properties and this ID.
 
 ```js
-    Cooldown.GetCooldown("test").GetUser("ID", [{Color: "Blue", Server: "test", phone: "06060606"}])
+    Cooldown.GetCooldown("test").GetUser("ID", [{Color: "Blue"}, {Server: "test"}, {phone: "06060606"}])
     //If User: returns the user, else returns null
 ```
 
@@ -82,7 +82,7 @@ Properties are an array which includes one/several object(s).
 Those objects have the ID of the property as a key.
 
 ```js
-    Cooldown.GetCooldown("test").AddUser({id: "ID", time: 60000, properties: [{Color: "blue", phone: "06060606"}]})
+    Cooldown.GetCooldown("test").AddUser({id: "ID", time: 60000, properties: [{Color: "blue"}, {phone: "06060606"}]})
     //This cooldown will be deleted in 60000 seconds
 ```
 
@@ -100,7 +100,7 @@ Remove with Properties
 Removes all users with these properties.
 
 ```js
-    Cooldown.GetCooldown("test").RemoveUsersByProperties([{Color: "Blue", Server: "test", phone: "06060606"}])
+    Cooldown.GetCooldown("test").RemoveUsersByProperties([{Color: "Blue"}, {Server: "test"}, {phone: "06060606"}])
     //If User: returns the users, else returns null
 ```
 
@@ -116,7 +116,7 @@ Remove with ID and Property
 Removes a unique user with these properties and this ID.
 
 ```js
-    Cooldown.GetCooldown("test").RemoveUser("ID", [{Color: "Blue", Server: "test", phone: "06060606"}])
+    Cooldown.GetCooldown("test").RemoveUser("ID", [{Color: "Blue"}, {Server: "test"}, {phone: "06060606"}])
     //If User: returns the user, else returns null
 ```
 
@@ -127,5 +127,5 @@ Removes a unique user with these properties and this ID.
 This method returns the time left before the cooldown is deleted
 
 ```js
-    Cooldown.GetCooldown("test").GetUser("ID", [{Color: "Blue", Server: "test", phone: "06060606"}]).GetTime()
+    Cooldown.GetCooldown("test").GetUser("ID", [{Color: "Blue"}, {Server: "test"}, {phone: "06060606"}]).GetTime()
 ```

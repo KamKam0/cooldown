@@ -7,12 +7,10 @@ class Cooldowns{
     AddCooldown(name){
         if(!name || typeof name !== "string" || name.length > 50) return null
         if(this.cooldowns_names.includes(name)) return null
-        const Cooldown = require("./Cooldown")
-        const vc = new Cooldown(name)
-        let datas = vc.GetAll()
-        this.cooldowns_names.push(datas.name)
-        this.cooldowns.push(datas.to_push)
-        return true
+        const vc = new (require("./Cooldown"))(name)
+        this.cooldowns_names.push(name)
+        this.cooldowns.push(vc)
+        return vc
     }
 
     DeleteCooldown(name){

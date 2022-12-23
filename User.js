@@ -1,9 +1,9 @@
 class User{
     constructor(datas){
-        this.ID = datas.id
-        this.Date = datas.date
-        this.Time = datas.time
-        this.Properties = datas.properties || []
+        this.ID = datas.ID
+        this.Date = datas.Date
+        this.Time = datas.Time
+        this.Properties = datas.Properties || []
     }
     
     GetTime(){
@@ -18,14 +18,14 @@ class User{
         if(!props) return null
         if(!Array.isArray(props)) return null
         if(!props[0]) return null
-        if(this.Properties.filter(e => props.find(b => Object.keys(e)[0] === Object.keys(b)[0] && Object.keys(e)[0] === Object.keys(b)[0])).length !== this.Properties.length) return null
+        if(this.Properties.filter(e => props.find(b => Object.keys(e)[0] === Object.keys(b)[0] && Object.values(e)[0] === Object.values(b)[0])).length !== this.Properties.length) return null
         return true
     }
 
     IncludeProperty(prop){
-        if(!property || typeof property !== "object") return null
-        if(typeof Object.values(property)[0] !== "string") return null
-        if(!this.Properties.find(b => Object.keys(prop)[0] === Object.keys(b)[0] && Object.keys(prop)[0] === Object.keys(b)[0])) return null
+        if(!prop || typeof prop !== "object") return null
+        if(typeof Object.values(prop)[0] !== "string") return null
+        if(!this.Properties.find(b => Object.keys(prop)[0] === Object.keys(b)[0] && Object.values(prop)[0] === Object.values(b)[0])) return null
         return true
     }
 }

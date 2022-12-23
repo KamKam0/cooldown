@@ -6,23 +6,24 @@ class Cooldown{
     }
 
     GetAll(){
-        return {name: this.name, to_push: this}
+        return this.ar
     }
 
     AddUser(datas){
         if(!datas || typeof datas !== "object") return null
-        if(!datas.id || ["number", "string"].includes(typeof datas.id)) return null
+        if(!datas.id || !["number", "string"].includes(typeof datas.id)) return null
         if(!datas.time || typeof datas.time !== "number") return null
         if(datas.properties && !Array.isArray(datas.properties)) return null
-        if(datas.properties && datas.properties.filter(pro => typeof pro === "object" && typeof Object.values(pro)[0] === "string").length !== datas.properties.length) return null
+        if(datas.properties && datas.properties.filter(pro => typeof pro === "object" && typeof Object.values(pro)[0] === "string" && !Object.entries(pro)[1]).length !== datas.properties.length) return null
         if(this.GetUser(datas.id, datas.properties)) return null
-        this.ar.push(new User({ID: datas.id, Time: datas.time, Date: Date.now(), Properties: datas.properties}))
+        let toretrun = new User({ID: datas.id, Time: datas.time, Date: Date.now(), Properties: datas.properties})
+        this.ar.push(toretrun)
         setTimeout(() => this.RemoveUser(datas.id, datas.properties), datas.time * 1000)
-        return true
+        return toretrun
     }
 
     RemoveUsersByID(id){
-        if(!id || ["number", "string"].includes(typeof id)) return null
+        if(!id || !["number", "string"].includes(typeof id)) return null
         if(!this.ar.filter(e => e.ID === id)[0]) return null
         this.ar = this.ar.filter(e => e.ID !== id)
         return true
@@ -45,17 +46,17 @@ class Cooldown{
     }
 
     RemoveUser(id, properties){
-        if(!id || ["number", "string"].includes(typeof id)) return null
+        if(!id || !["number", "string"].includes(typeof id)) return null
         if(!properties || !Array.isArray(properties)) return null
         if(properties.filter(pro => typeof pro === "object" && typeof Object.values(pro)[0] === "string").length !== properties.length) return null
         let user = this.ar.find(e => e.ID === id && e.CompareProperties(properties))
         if(!user) return null
-        this.ar.splice(user, 1)
+        this.ar.splice(this.ar.indexOf(user), 1)
         return true
     }
 
     GetUsersByID(id){
-        if(!id || ["number", "string"].includes(typeof id)) return null
+        if(!id || !["number", "string"].includes(typeof id)) return null
         let users = this.ar.filter(e => e.ID === id)
         if(!users[0]) return null
         return users
@@ -78,7 +79,7 @@ class Cooldown{
     }
 
     GetUser(id, properties){
-        if(!id || ["number", "string"].includes(typeof id)) return null
+        if(!id || !["number", "string"].includes(typeof id)) return null
         if(!properties || !Array.isArray(properties)) return null
         if(properties.filter(pro => typeof pro === "object" && typeof Object.values(pro)[0] === "string").length !== properties.length) return null
         let user = this.ar.find(e => e.ID === id && e.CompareProperties(properties))
