@@ -17,8 +17,8 @@ class Cooldowns{
 
     /**
      * 
-     * @param {(null|Cooldown)} name 
-     * @returns 
+     * @param {string} name
+     * @returns {(Cooldown|null)}
      */
     AddCooldown(name){
         if(!name || typeof name !== "string" || name.length > 50) return null
@@ -32,7 +32,7 @@ class Cooldowns{
     /**
      * 
      * @param {(null|boolean)} name 
-     * @returns 
+     * @returns {(Cooldown|null)}
      */
     DeleteCooldown(name){
         if(!name || typeof name !== "string") return null
@@ -44,8 +44,8 @@ class Cooldowns{
 
     /**
      * 
-     * @param {(null|Cooldown)} name 
-     * @returns 
+     * @param {string} name
+     * @returns {(Cooldown|null)}
      */
     GetCooldown(name){
         if(!name || typeof name !== "string") return null
@@ -56,7 +56,7 @@ class Cooldowns{
     /**
      * 
      * @param {(null|boolean)} name 
-     * @returns 
+     * @returns {(Cooldown|null)}
      */
     Deploy(elements){
         if(!elements || !Array.isArray(elements)) return null
