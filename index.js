@@ -1,2 +1,9 @@
+const Cooldown = require("./Cooldowns")
+/**
+ * @returns {string}
+ */
 exports.version = require("./package.json").version
-module.exports = require("./Cooldowns")
+/**
+ * @returns {<Cooldown>}
+ */
+module.exports = Cooldown

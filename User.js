@@ -1,4 +1,12 @@
 class User{
+    /**
+     * 
+     * @param {object} datas
+     * @param {string} datas.ID
+     * @param {number} datas.Date
+     * @param {number} datas.Time
+     * @param {object[]} [datas.Properties=[]]
+     */
     constructor(datas){
         this.ID = datas.ID
         this.Date = datas.Date
@@ -6,6 +14,10 @@ class User{
         this.Properties = datas.Properties || []
     }
     
+    /**
+     * 
+     * @returns {number}
+     */
     GetTime(){
         let def = String(this.Time - ((Date.now() - this.Date) / 1000))
         if(def.includes(".")) def = def.split(".")[0]
@@ -14,6 +26,11 @@ class User{
         return def
     }
 
+    /**
+     * 
+     * @param {object[]} props 
+     * @returns {(boolean|null)}
+     */
     CompareProperties(props){
         if(!props) return null
         if(!Array.isArray(props)) return null
@@ -22,6 +39,11 @@ class User{
         return true
     }
 
+    /**
+     * 
+     * @param {object[]} props 
+     * @returns {(boolean|null)}
+     */
     IncludeProperty(prop){
         if(!prop || typeof prop !== "object") return null
         if(typeof Object.values(prop)[0] !== "string") return null
