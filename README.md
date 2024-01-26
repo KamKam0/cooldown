@@ -17,15 +17,15 @@ npm install @kamkam1_0/cooldown
 ### Add/Remove/Get a Cooldown
 ```js
     let Cooldown = new Cooldowns()
-    Cooldown.AddCooldown("test")
-    Cooldown.DeleteCooldown("test")
-    Cooldown.GetCooldown("test")
+    Cooldown.addCooldown("test")
+    Cooldown.deleteCooldown("test")
+    Cooldown.getCooldown("test")
 ```
 
 ### Add Cooldowns
 ```js
     let Cooldown = new Cooldowns()
-    Cooldown.Deploy(["test", "test2"])
+    Cooldown.deploy(["test", "test2"])
 ```
 
 ## Dealing with Users
@@ -36,7 +36,7 @@ Get with ID
 Returns all users with this ID.
 
 ```js
-    Cooldown.GetCooldown("test").GetUsersByID("ID")
+    Cooldown.getCooldown("test").getUsersByID("ID")
     //If User: returns the users, else returns null
 ```
 
@@ -44,7 +44,7 @@ Get with Properties
 Returns all users with these properties.
 
 ```js
-    Cooldown.GetCooldown("test").GetUsersByProperties([{Color: "Blue"}, {Server: "test"}, {phone: "06060606"}])
+    Cooldown.getCooldown("test").getUsersByProperties([{color: "Blue"}, {server: "test"}, {phone: "06060606"}])
     //If User: returns the users, else returns null
 ```
 
@@ -52,7 +52,7 @@ Get with Property
 Returns all users with this property.
 
 ```js
-    Cooldown.GetCooldown("test").GetUsersByProperty({Color: "Blue"})
+    Cooldown.getCooldown("test").getUsersByProperty({color: "Blue"})
     //If User: returns the users, else returns null
 ```
 
@@ -60,7 +60,7 @@ Get with ID and Property
 Returns a unique user with these properties and this ID.
 
 ```js
-    Cooldown.GetCooldown("test").GetUser("ID", [{Color: "Blue"}, {Server: "test"}, {phone: "06060606"}])
+    Cooldown.getCooldown("test").getUser("ID", [{color: "Blue"}, {server: "test"}, {phone: "06060606"}])
     //If User: returns the user, else returns null
 ```
 
@@ -68,21 +68,21 @@ Get All
 Returns all the users in the cooldown.
 
 ```js
-    Cooldown.GetCooldown("test").GetAll()
+    Cooldown.getCooldown("test").getAll()
 ```
 
 ## Add a User
 
 You have to specify at least two values: time and ID
 ID is string/number.
-Time is a number that represents the time of the cooldown.
+Time is a number that represents the time of the cooldown in seconds.
 
 Properties are optional.
 Properties are an array which includes one/several object(s).
 Those objects have the ID of the property as a key.
 
 ```js
-    Cooldown.GetCooldown("test").AddUser({id: "ID", time: 60000, properties: [{Color: "blue"}, {phone: "06060606"}]})
+    Cooldown.getCooldown("test").addUser({id: "ID", time: 60000, properties: [{color: "blue"}, {phone: "06060606"}]})
     //This cooldown will be deleted in 60000 seconds
 ```
 
@@ -92,7 +92,7 @@ Remove with ID
 Removes all users with this ID.
 
 ```js
-    Cooldown.GetCooldown("test").RemoveUsersByID("ID")
+    Cooldown.getCooldown("test").removeUsersByID("ID")
     //If User: returns the users, else returns null
 ```
 
@@ -100,7 +100,7 @@ Remove with Properties
 Removes all users with these properties.
 
 ```js
-    Cooldown.GetCooldown("test").RemoveUsersByProperties([{Color: "Blue"}, {Server: "test"}, {phone: "06060606"}])
+    Cooldown.getCooldown("test").removeUsersByProperties([{color: "Blue"}, {server: "test"}, {phone: "06060606"}])
     //If User: returns the users, else returns null
 ```
 
@@ -108,7 +108,7 @@ Remove with Property
 Removes all users with this property.
 
 ```js
-    Cooldown.GetCooldown("test").RemoveUsersByProperty({Color: "Blue"})
+    Cooldown.getCooldown("test").removeUsersByProperty({color: "Blue"})
     //If User: returns the users, else returns null
 ```
 
@@ -116,16 +116,16 @@ Remove with ID and Property
 Removes a unique user with these properties and this ID.
 
 ```js
-    Cooldown.GetCooldown("test").RemoveUser("ID", [{Color: "Blue"}, {Server: "test"}, {phone: "06060606"}])
+    Cooldown.getCooldown("test").removeUser("ID", [{color: "Blue"}, {server: "test"}, {phone: "06060606"}])
     //If User: returns the user, else returns null
 ```
 
 ## User methods
 
-### GetTime
+### getTime
 
 This method returns the time left before the cooldown is deleted
 
 ```js
-    Cooldown.GetCooldown("test").GetUser("ID", [{Color: "Blue"}, {Server: "test"}, {phone: "06060606"}]).GetTime()
+    Cooldown.getCooldown("test").getUser("ID", [{color: "Blue"}, {server: "test"}, {phone: "06060606"}]).getTime()
 ```

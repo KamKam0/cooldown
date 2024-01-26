@@ -1,13 +1,13 @@
-const Cooldown = require("./Cooldown")
+const Cooldown = require("./cooldown")
 class Cooldowns{
-    #cooldowns_names;
+    #cooldownsNames;
     #cooldowns;
     constructor(){
         /**
          * @private
          * @type {object[].<string>}
          */
-        this.#cooldowns_names = []
+        this.#cooldownsNames = []
         /**
          * @private
          * @type {object[].<Cooldown>}
@@ -20,11 +20,11 @@ class Cooldowns{
      * @param {string} name
      * @returns {(Cooldown|null)}
      */
-    AddCooldown(name){
+    addCooldown(name){
         if(!name || typeof name !== "string" || name.length > 50) return null
-        if(this.#cooldowns_names.includes(name)) return null
+        if(this.#cooldownsNames.includes(name)) return null
         const vc = new Cooldown(name)
-        this.#cooldowns_names.push(name)
+        this.#cooldownsNames.push(name)
         this.#cooldowns.push(vc)
         return vc
     }
@@ -34,10 +34,10 @@ class Cooldowns{
      * @param {(null|boolean)} name 
      * @returns {(Cooldown|null)}
      */
-    DeleteCooldown(name){
+    deleteCooldown(name){
         if(!name || typeof name !== "string") return null
-        if(!this.#cooldowns_names.includes(name)) return null
-        this.#cooldowns_names.splice(this.#cooldowns_names[this.#cooldowns_names.indexOf(this.#cooldowns_names.find(e => e === name))], 1)
+        if(!this.#cooldownsNames.includes(name)) return null
+        this.#cooldownsNames.splice(this.#cooldownsNames[this.#cooldownsNames.indexOf(this.#cooldownsNames.find(e => e === name))], 1)
         this.#cooldowns.splice(this.#cooldowns[this.#cooldowns.indexOf(this.#cooldowns.find(e => e.name === name))], 1)
         return true
     }
@@ -47,9 +47,9 @@ class Cooldowns{
      * @param {string} name
      * @returns {(Cooldown|null)}
      */
-    GetCooldown(name){
+    getCooldown(name){
         if(!name || typeof name !== "string") return null
-        if(!this.#cooldowns_names.includes(name)) return null
+        if(!this.#cooldownsNames.includes(name)) return null
         return this.#cooldowns.find(c => c.name === name)
     }
 
@@ -58,9 +58,9 @@ class Cooldowns{
      * @param {(null|boolean)} name 
      * @returns {(Cooldown|null)}
      */
-    Deploy(elements){
+    deploy(elements){
         if(!elements || !Array.isArray(elements)) return null
-        elements.filter(pro => typeof pro === "string").forEach(name => this.AddCooldown(name))
+        elements.filter(pro => typeof pro === "string").forEach(name => this.addCooldown(name))
         return true
     }
 }
